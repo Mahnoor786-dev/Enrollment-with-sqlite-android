@@ -15,6 +15,7 @@
         android:ems="10"
         android:hint="Class"
         android:inputType="textPersonName"
+        android:minHeight="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -25,7 +26,7 @@
     <EditText
         android:id="@+id/regId"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:ems="10"
         android:hint="Registration Number"
         android:inputType="textPersonName"
@@ -39,23 +40,20 @@
     <EditText
         android:id="@+id/name"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="32dp"
-        android:layout_marginBottom="264dp"
         android:ems="10"
         android:hint="Student Name"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/_dynamic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.402"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.046" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Switch
-        android:id="@+id/switch1"
+        android:id="@+id/regular"
         android:layout_width="165dp"
-        android:layout_height="46dp"
+        android:layout_height="48dp"
         android:layout_marginStart="112dp"
         android:layout_marginTop="224dp"
         android:layout_marginEnd="115dp"
