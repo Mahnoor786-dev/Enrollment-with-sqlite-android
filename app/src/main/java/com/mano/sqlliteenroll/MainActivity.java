@@ -37,6 +37,10 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     stu = new Student(name.getText().toString(), s_Class.getText().toString(), regular.isChecked());
                     Toast.makeText(getApplicationContext(), stu.toString(), Toast.LENGTH_SHORT).show();
+
+                    DatabaseHelper db = new DatabaseHelper(MainActivity.this);
+
+
                 } catch (Exception e) {
                     stu = new Student("error", "-1", false);
                     Toast.makeText(getApplicationContext(), stu.toString(), Toast.LENGTH_SHORT).show();
