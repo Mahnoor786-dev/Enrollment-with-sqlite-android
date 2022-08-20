@@ -4,12 +4,12 @@ import androidx.annotation.NonNull;
 
 public class Student {
     private String name;
-    private String s_class;
+    private String stuClass;
     private boolean isRegular;
 
     public Student( String name, String s_class, boolean isRegular) {
         this.name = name;
-        this.s_class = s_class;
+        this.stuClass = s_class;
         this.isRegular = isRegular;
     }
 
@@ -20,7 +20,7 @@ public class Student {
         return name;
     }
 
-    public String getS_class() { return s_class;  }
+    public String getStuClass() { return stuClass;  }
 
     public boolean isRegular() {  return isRegular;  }
 
@@ -29,7 +29,7 @@ public class Student {
     }
 
     public void setS_class(String s_class) {
-        this.s_class = s_class;
+        this.stuClass = s_class;
     }
 
     public void setRegular(boolean regular) {
@@ -40,7 +40,7 @@ public class Student {
     public String toString() {
         return "Student{" +
                 ", name='" + name + '\'' +
-                ", s_class=" + s_class +
+                ", s_class=" + stuClass +
                 ", isRegular=" + isRegular +
                 '}';
     }

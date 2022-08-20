@@ -2,10 +2,14 @@ package com.mano.sqlliteenroll;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -28,16 +32,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(createTableQuery);
     }
 
-    public boolean addStudent(Student stu) {
-        //getWritableDatabase for insert actions.
-        //getReadableDatabase for select (read) actions.
-       SQLiteDatabase db = this.getWritableDatabase();
-        // ContentValues stores data in pairs. works like hashmap...
-        ContentValues cv = new ContentValues();
-        cv.put();
-
-    }
-
     /* Eg v1 of ur app, its out to the world and u got 5M users... then u want new feature ond would like to add a new table.. then instead of crashing
     the app bcz it does not line up with.. so we use onUpgrade that triggers automatically and modifies the schema for DB whenever needs to be done.
     Hence provides a forward compatibility and a backward compat */
@@ -45,6 +39,47 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //this is called if the database version number changes. It prevents previous users apps from breaking when you change the DB design.
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
     }
+
+    public boolean addStudent(Student stu) {
+        //getWritableDatabase for insert actions , getReadableDatabase for select (read) actions.
+       SQLiteDatabase db = this.getWritableDatabase();
+        // ContentValues stores data in pairs. works like hashmap...
+        ContentValues cv = new ContentValues();
+        cv.put(StudentName, stu.getName());
+        cv.put(StudentClass, stu.getStuClass());
+        cv.put(isRegular, stu.isRegular());
+
+        // db.insert(table, null, cv); Instead of just calling insert function, return its result in a local variable. if it returns -ve number, unsucessful. if it returns +ve number, sucessful
+        long insert = db.insert(table, null, cv); //
+        return insert != -1; //if -1, return false else true
+    }
+
+    public List<Student> getStudents(){
+        List<Student> studentsList = new ArrayList<>();
+        String queryString = "SELECT * FROM " + table;
+        // using getReadable database, you can access db from multiple places
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(queryString, null);  // Cursor is the result set from a SQL statement.
+        //check if we got some result from db
+        if(cursor.moveToFirst())
+        {
+            //loop through the cursor (result set) and create new student objects. put them into return list
+            do {
+                String name  = cursor.getString(1);
+                String stuClass  = cursor.getString(2);
+                boolean regularStudent = cursor.getInt(3) == 1? true: false;
+                Student stu = new Student(name, stuClass, regularStudent);
+                studentsList.add(stu);
+
+            }while (cursor.moveToFirst());
+        }
+        else {
+                // failure, do not add anything to list
+        }
+        cursor.close();
+        db.close();
+        return studentsList;
+    }
+
 }

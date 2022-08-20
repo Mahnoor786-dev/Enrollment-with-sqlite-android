@@ -36,15 +36,14 @@ public class MainActivity extends AppCompatActivity {
                 Student stu;
                 try {
                     stu = new Student(name.getText().toString(), s_Class.getText().toString(), regular.isChecked());
-                    Toast.makeText(getApplicationContext(), stu.toString(), Toast.LENGTH_SHORT).show();
-
-                    DatabaseHelper db = new DatabaseHelper(MainActivity.this);
-
-
+                    Toast.makeText(MainActivity.this, stu.toString(), Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
-                    stu = new Student("error", "-1", false);
-                    Toast.makeText(getApplicationContext(), stu.toString(), Toast.LENGTH_SHORT).show();
+                    stu = new Student("error", "error", false);
+                    Toast.makeText(getApplicationContext(), "error creating student", Toast.LENGTH_SHORT).show();
                 }
+                DatabaseHelper db = new DatabaseHelper(MainActivity.this);
+                boolean success = db.addStudent(stu);
+                Toast.makeText(MainActivity.this, "sucessfully added: " + success, Toast.LENGTH_LONG).show();
             }
         });
 
