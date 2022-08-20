@@ -72,7 +72,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Student stu = new Student(name, stuClass, regularStudent);
                 studentsList.add(stu);
 
-            }while (cursor.moveToFirst());
+            }while (cursor.moveToNext());
         }
         else {
                 // failure, do not add anything to list
