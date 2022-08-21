@@ -3,11 +3,13 @@ package com.mano.sqlliteenroll;
 import androidx.annotation.NonNull;
 
 public class Student {
+    private int id;
     private String name;
     private String stuClass;
     private boolean isRegular;
 
-    public Student( String name, String s_class, boolean isRegular) {
+    public Student(int id, String name, String s_class, boolean isRegular) {
+        this.id = id;
         this.name = name;
         this.stuClass = s_class;
         this.isRegular = isRegular;
@@ -15,6 +17,10 @@ public class Student {
 
     public Student() {
     }
+
+    public void setId(int id) {  this.id = id;  }
+
+    public int getId() {  return id;  }
 
     public String getName() {
         return name;
@@ -38,7 +44,7 @@ public class Student {
 
     @Override
     public String toString() {
-        return "Student{" +
+        return "Student{" +  "id=" + id +
                 ", name='" + name + '\'' +
                 ", s_class=" + stuClass +
                 ", isRegular=" + isRegular +

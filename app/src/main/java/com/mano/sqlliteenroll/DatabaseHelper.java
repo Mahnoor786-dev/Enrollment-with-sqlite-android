@@ -21,7 +21,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //removed last 3 parameters from constructor of type1.. and hardcoded those last 3 parameters for super() call as we are here working with only 1 db
     public DatabaseHelper(@Nullable Context context) {
-        super(context, "students.db", null, 1);
+        super(context, "student.db", null, 1);
     }
 
     //It's automatically called when app requests or inputs new data. --> we need to create a new table inside this method
@@ -46,6 +46,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
        SQLiteDatabase db = this.getWritableDatabase();
         // ContentValues stores data in pairs. works like hashmap...
         ContentValues cv = new ContentValues();
+        cv.put(StudentId, stu.getId());
         cv.put(StudentName, stu.getName());
         cv.put(StudentClass, stu.getStuClass());
         cv.put(isRegular, stu.isRegular());
@@ -66,10 +67,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         {
             //loop through the cursor (result set) and create new student objects. put them into return list
             do {
+                int stuID = cursor.getInt(0);
                 String name  = cursor.getString(1);
                 String stuClass  = cursor.getString(2);
                 boolean regularStudent = cursor.getInt(3) == 1? true: false;
-                Student stu = new Student(name, stuClass, regularStudent);
+                Student stu = new Student(stuID, name, stuClass, regularStudent);
                 studentsList.add(stu);
 
             }while (cursor.moveToNext());
@@ -80,6 +82,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return studentsList;
+    }
+
+    // Delete a student (if found - else return false)
+    public boolean deleteOne(Student stu) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String queryString = "DELETE FROM " + table + " WHERE " + StudentId + " = " + stu.getId();
+        Cursor cursor = db.rawQuery(queryString, null);
+        if (cursor.moveToFirst()) {
+            return true;
+        }
+        else {
+            return false;
+        }
+
     }
 
 }
