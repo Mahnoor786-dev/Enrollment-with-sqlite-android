@@ -11,8 +11,8 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DatabaseHelper extends SQLiteOpenHelper {
-
+public class DatabaseHelper extends SQLiteOpenHelper
+    {
     public static final String table = "STUDENT_TABLE";
     public static final String StudentId = "ID";
     public static final String StudentName = "STUDENT_NAME";
@@ -76,9 +76,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             }while (cursor.moveToNext());
         }
-        else {
-                // failure, do not add anything to list
-        }
         cursor.close();
         db.close();
         return studentsList;
@@ -95,7 +92,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         else {
             return false;
         }
-
     }
 
+    public void updateStudent(Student stu){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(StudentId, stu.getId());
+        cv.put(StudentName, stu.getName());
+        cv.put(StudentClass, stu.getStuClass());
+        cv.put(isRegular, stu.isRegular());
+        db.update(table, cv, "ID=?", new String[]{ String.valueOf( stu.getId())});
+    }
 }

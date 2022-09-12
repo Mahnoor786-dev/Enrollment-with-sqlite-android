@@ -1,6 +1,8 @@
 package com.mano.sqlliteenroll;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     EditText name, s_Class, stu_Id;
     Switch regular;
-    Button enroll, viewAll;
+    Button enroll, viewAll, updateBtn;
     ListView list;
     DatabaseHelper db;
     ArrayAdapter adapter;
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         list=findViewById(R.id.stu_list);
         enroll=findViewById(R.id.enroll);
         viewAll=findViewById(R.id.viewAll);
+        updateBtn = findViewById(R.id.update);
         db = new DatabaseHelper(MainActivity.this);
 
         enroll.setOnClickListener(new View.OnClickListener() {
@@ -41,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
                 Student stu;
                 try {
                     stu = new Student(Integer.parseInt(stu_Id.getText().toString()) ,name.getText().toString(), s_Class.getText().toString(), regular.isChecked());
-                    Toast.makeText(MainActivity.this, stu.toString(), Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(MainActivity.this, stu.toString(), Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                     stu = new Student(-1,"error", "error", false);
                     Toast.makeText(getApplicationContext(), "error creating student", Toast.LENGTH_SHORT).show();
@@ -71,12 +74,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        updateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, update.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void ShowStudentsOnListView(DatabaseHelper database)
     {
         adapter = new ArrayAdapter<Student>(MainActivity.this, android.R.layout.simple_list_item_1, db.getStudents());
-        Toast.makeText(MainActivity.this, "Deleted " + db.getStudents(), Toast.LENGTH_SHORT).show();
         list.setAdapter(adapter);
     }
 

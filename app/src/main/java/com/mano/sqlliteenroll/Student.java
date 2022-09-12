@@ -44,11 +44,10 @@ public class Student {
 
     @Override
     public String toString() {
-        return "Student{" +  "id=" + id +
-                ", name='" + name + '\'' +
-                ", s_class=" + stuClass +
-                ", isRegular=" + isRegular +
-                '}';
+        return "ID:" + id +
+                ", NAME:" + name +
+                ", CLASS:" + stuClass +
+                ", REGULAR:" + isRegular ;
     }
 
 }
