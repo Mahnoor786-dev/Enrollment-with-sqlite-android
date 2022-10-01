@@ -38,20 +38,17 @@ public class MainActivity extends AppCompatActivity {
         updateBtn = findViewById(R.id.update);
         db = new DatabaseHelper(MainActivity.this);
 
-        enroll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Student stu;
-                try {
-                    stu = new Student(Integer.parseInt(stu_Id.getText().toString()) ,name.getText().toString(), s_Class.getText().toString(), regular.isChecked());
-                   // Toast.makeText(MainActivity.this, stu.toString(), Toast.LENGTH_SHORT).show();
-                } catch (Exception e) {
-                    stu = new Student(-1,"error", "error", false);
-                    Toast.makeText(getApplicationContext(), "error creating student", Toast.LENGTH_SHORT).show();
-                }
-                boolean success = db.addStudent(stu);
-                Toast.makeText(MainActivity.this, "sucessfully added: " + success, Toast.LENGTH_LONG).show();
+        enroll.setOnClickListener(view -> {
+            Student stu;
+            try {
+                stu = new Student(Integer.parseInt(stu_Id.getText().toString()) ,name.getText().toString(), s_Class.getText().toString(), regular.isChecked());
+               // Toast.makeText(MainActivity.this, stu.toString(), Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                stu = new Student(-1,"error", "error", false);
+                Toast.makeText(getApplicationContext(), "error creating student", Toast.LENGTH_SHORT).show();
             }
+            boolean success = db.addStudent(stu);
+            Toast.makeText(MainActivity.this, "sucessfully added: " + success, Toast.LENGTH_LONG).show();
         });
 
         viewAll.setOnClickListener(new View.OnClickListener() {
@@ -62,16 +59,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parentView, View view, int position, long l) {
-                // identify and delete clicked student
-                Student clickedStu = (Student) parentView.getItemAtPosition(position);
-                db.deleteOne(clickedStu);
-                // Print updated list
-                ShowStudentsOnListView(db);
-                Toast.makeText(MainActivity.this, "Deleted " + clickedStu, Toast.LENGTH_SHORT).show();
-            }
+        list.setOnItemClickListener((parentView, view, position, l) -> {
+            // identify and delete clicked student
+            Student clickedStu = (Student) parentView.getItemAtPosition(position);
+            db.deleteOne(clickedStu);
+            // Print updated list
+            ShowStudentsOnListView(db);
+            Toast.makeText(MainActivity.this, "Deleted " + clickedStu, Toast.LENGTH_SHORT).show();
         });
 
         updateBtn.setOnClickListener(new View.OnClickListener() {
